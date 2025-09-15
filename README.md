@@ -112,6 +112,12 @@ Write down the event numbers for your devices. You will need to use these in scr
 
 Download `SunshineScreenSaver.sh`, place it accesable location and add `chmod +x`
 
+Use your favourite text editor and replace:
+
+- Device IDs
+- Display outputs
+- Resolutions/positions/priorities
+
 Configure KDE Power Management
 
 ![screenshot](https://i.imgur.com/Fske2J1.png)
