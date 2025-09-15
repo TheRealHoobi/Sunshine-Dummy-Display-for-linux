@@ -45,11 +45,11 @@ for edid_file in /sys/class/drm/*/edid; do
 done
 ```
 
-Now, create the necessary directory and export the EDID to a file named `dummy.bin`. Remember to replace `card-0-DP-1` with your chosen monitor's output name.
+Now, create the necessary directory and export the EDID to a file named `dummy.bin`. Remember to replace `card0-DP-1` with your chosen monitor's output name.
 
 ```
 sudo mkdir -p /lib/firmware/edid
-sudo cat /sys/class/drm/card0-HDMI-A-1/edid > /lib/firmware/edid/dummy.bin   
+sudo cat /sys/class/drm/card0-DP-1/edid > /lib/firmware/edid/dummy.bin   
 ```
 
 # ⚙️ Step 3: Modify GRUB Configuration
