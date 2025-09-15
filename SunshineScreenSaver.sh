@@ -49,9 +49,6 @@ VIRTUAL_DISPLAY_RESOLUTION="2560x1440"
 # Set the primary physical display that the virtual display will clone.
 PRIMARY_DISPLAY_NAME="DP-1"
 
-# Log file location
-LOG_FILE="$HOME/sunshine_monitor_log.txt"
-
 # -------------------- END OF USER CONFIGURATION ------------------------------
 # You should not need to edit anything below this line.
 
@@ -62,24 +59,20 @@ MOUSE_DEVICE="/dev/input/event${MOUSE_DEVICE_ID}"
 # Calculate the lowest priority for the virtual display.
 VIRTUAL_PRIORITY=$((${#PHYSICAL_DISPLAYS[@]} + 1))
 
-# Start logging
-echo "==========================================================" >> "$LOG_FILE"
-echo "Script started at $(date '+%Y-%m-%d %H:%M:%S')" >> "$LOG_FILE"
-
 # 1. Disable all physical monitors and enable the virtual display.
-echo "Disabling physical monitors and enabling the virtual one. The script is now listening for input events..." >> "$LOG_FILE"
+echo "Disabling physical monitors and enabling the virtual one. The script is now listening for input events..."
 for display in "${PHYSICAL_DISPLAYS[@]}"; do
-    kscreen-doctor "output.${display}.disable" >> "$LOG_FILE" 2>&1
+    kscreen-doctor "output.${display}.disable" 
 done
 
-kscreen-doctor "output.${VIRTUAL_DISPLAY_NAME}.enable" >> "$LOG_FILE" 2>&1
-kscreen-doctor "output.${VIRTUAL_DISPLAY_NAME}.mode.${VIRTUAL_DISPLAY_RESOLUTION}" >> "$LOG_FILE" 2>&1
-kscreen-doctor "output.${VIRTUAL_DISPLAY_NAME}.clone.${PRIMARY_DISPLAY_NAME}" >> "$LOG_FILE" 2>&1
-kscreen-doctor "output.${VIRTUAL_DISPLAY_NAME}.priority.${VIRTUAL_PRIORITY}" >> "$LOG_FILE" 2>&1
+kscreen-doctor "output.${VIRTUAL_DISPLAY_NAME}.enable"
+kscreen-doctor "output.${VIRTUAL_DISPLAY_NAME}.mode.${VIRTUAL_DISPLAY_RESOLUTION}"
+kscreen-doctor "output.${VIRTUAL_DISPLAY_NAME}.clone.${PRIMARY_DISPLAY_NAME}"
+kscreen-doctor "output.${VIRTUAL_DISPLAY_NAME}.priority.${VIRTUAL_PRIORITY}"
 
 # 2. Listen for mouse or key press (concurrently)
 # Run both evtest commands in the background and save their process IDs.
-echo "$(date '+%Y-%m-%d %H:%M:%S'): Listening for keyboard and mouse events." >> "$LOG_FILE"
+echo "$(date '+%Y-%m-%d %H:%M:%S'): Listening for keyboard and mouse events."
 sudo -S evtest "$KEYBOARD_DEVICE" | grep -m 1 "Event: time" &
 KEYBOARD_PID=$!
 sudo -S evtest "$MOUSE_DEVICE" | grep -m 1 "Event: time" &
@@ -89,20 +82,20 @@ MOUSE_PID=$!
 wait -n
 
 # 3. Stop the other process to prevent it from running indefinitely.
-echo "$(date '+%Y-%m-%d %H:%M:%S'): Input detected. Stopping listening processes." >> "$LOG_FILE"
+echo "$(date '+%Y-%m-%d %H:%M:%S'): Input detected. Stopping listening processes."
 kill $KEYBOARD_PID &>/dev/null
 kill $MOUSE_PID &>/dev/null
 
 # 4. Enable physical monitors and disable the virtual one.
-echo "Input detected! Physical monitors are being re-enabled." >> "$LOG_FILE"
+echo "Input detected! Physical monitors are being re-enabled."
 
-kscreen-doctor "output.${VIRTUAL_DISPLAY_NAME}.disable" >> "$LOG_FILE" 2>&1
+kscreen-doctor "output.${VIRTUAL_DISPLAY_NAME}.disable"
 
 for i in "${!PHYSICAL_DISPLAYS[@]}"; do
     display="${PHYSICAL_DISPLAYS[$i]}"
     position="${DISPLAY_POSITIONS[$i]}"
-    kscreen-doctor "output.${display}.enable" >> "$LOG_FILE" 2>&1
-    kscreen-doctor "output.${display}.position.${position}" >> "$LOG_FILE" 2>&1
+    kscreen-doctor "output.${display}.enable"
+    kscreen-doctor "output.${display}.position.${position}"
 done
 
 # 5. Set display priorities (optional)
@@ -110,9 +103,9 @@ if [[ ${#DISPLAY_PRIORITIES[@]} -gt 0 ]]; then
     for i in "${!PHYSICAL_DISPLAYS[@]}"; do
         display="${PHYSICAL_DISPLAYS[$i]}"
         priority="${DISPLAY_PRIORITIES[$i]}"
-        kscreen-doctor "output.${display}.priority.${priority}" >> "$LOG_FILE" 2>&1
+        kscreen-doctor "output.${display}.priority.${priority}"
     done
 fi
 
-echo "Physical monitors have been re-enabled. The script has finished." >> "$LOG_FILE"
-echo "==========================================================" >> "$LOG_FILE"
+echo "Physical monitors have been re-enabled. The script has finished."
+echo "=========================================================="
