@@ -108,4 +108,12 @@ You will see a list of devices with their corresponding event numbers, for examp
 
 Write down the event numbers for your devices. You will need to use these in script configuration.
 
+# ⌨️ Step 6: Configure script and KDE
+
+Download `SunshineScreenSaver.sh`, place it accesable location and add `chmod +x`
+
+Configure KDE Power Management
+
+![screenshot](https://i.imgur.com/Fske2J1.png)
+
 With this setup, you can now enjoy Sunshine with physical displays turned off! ✨
