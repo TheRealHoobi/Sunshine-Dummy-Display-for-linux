@@ -1,10 +1,10 @@
-# 🌞 Dummy Screen setup for Linux for Sunshine purposes
+# 🌞 Dummy Display setup on Linux for Sunshine purposes
 
-This guide will help you configure a dummy monitor for Sunshine on Manjaro (and i hope other distro too!). This is perfect for daily drivers where you dont want to have physical displays on all the time. 🎮
+This guide will help you configure a dummy monitor for Sunshine on Manjaro (and I hope other distros too!). This is perfect for daily drivers where you don't want to have physical displays on all the time. 🎮
 
-# TL/DR
+# TL;DR
 
-This script automatically disable your physical displays, allowing power saving but keeping dummy display on. Evtool reads user input from keyboard/mouse movement and bring physical displays back on to they oryginal posiotion.
+This script automatically disables your physical displays, allowing power saving but keeping dummy display on. Evtest reads user input from keyboard/mouse movement and bring physical displays back on to their original position.
 
 # Tested on
 
@@ -74,7 +74,7 @@ sudo update-grub
 
 # 🔐 Step 4: Configure Passwordless evtest Access
 
-To make the work, we'll allow your user to run evtest with `sudo` in script without password.
+We'll allow your user to run evtest in a script without a password.
 
 Create a new file in the sudoers.d directory.
 
