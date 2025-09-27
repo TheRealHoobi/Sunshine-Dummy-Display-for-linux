@@ -49,7 +49,7 @@ Now, create the necessary directory and export the EDID to a file named `dummy.b
 
 ```
 sudo mkdir -p /lib/firmware/edid
-sudo cat /sys/class/drm/card0-DP-1/edid > /lib/firmware/edid/dummy.bin   
+sudo sh -c 'cat /sys/class/drm/card0-DP-1/edid > /lib/firmware/edid/dummy.bin'  
 ```
 
 # ⚙️ Step 3: Modify GRUB Configuration
